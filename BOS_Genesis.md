@@ -11,7 +11,7 @@ ABP_KEYS=("bos.abp" "EOS7hHHDtnPRbhMmfHJHUEKQyiutKrt9wZPdy1JbaATVLyxpCkrop")  # 
 
 # the Core Teams' accounts and keys
 MERCURY_KEYS=("mercury" "EOS8Ybz56pR5b4Rq2nvJ3ZT9CehG78pXEYdwQ9LHKPm4ZFuwM777W" "EOS8Ybz56pR5b4Rq2nvJ3ZT9CehG78pXEYdwQ9LHKPm4ZFuwM777W")
-VEUNS_KEYS=("veuns" "EOS8iN2NZR29sKjfgraREWMZCTSUTuULMRiL3QmU1McCHxDBLeRcL" "EOS5xcrat34D5vkPj8vx1WRCS3Rd5PxjQbHrz7pmyLKLTsDDW91nn")
+VENUS_KEYS=("venus" "EOS8iN2NZR29sKjfgraREWMZCTSUTuULMRiL3QmU1McCHxDBLeRcL" "EOS5xcrat34D5vkPj8vx1WRCS3Rd5PxjQbHrz7pmyLKLTsDDW91nn")
 EARTH_KEYS=("earth" "EOS58Mzpd2hEp5Q4MqDFBgX9EbWU6gZcCQZ7Soa9HsuBYw1zvNGxT" "EOS58Mzpd2hEp5Q4MqDFBgX9EbWU6gZcCQZ7Soa9HsuBYw1zvNGxT")
 MARS_KEYS=("mars" "EOS8DmeNbNDJc8wMNd7C2Upz3zDRhc6P87QHiW8EbssjKSLSGTrbs" "EOS71u9BFuat4CtxzbqzFGzacgdgDdtujpiRm95Kyw24MUuMvWUNX")
 JUPITER_KEYS=("jupiter" "EOS7do6GqRAJEpcJY536zG6j3VqXMMdpMKtDCkFXzYYNCKLB73xVU" "EOS5yajrR2u7XxDcnjXE2H6WYjDabi2Z44zRrYz6pK3fZtFAyrnt5")
@@ -70,7 +70,7 @@ cleos create account eosio ${BOS_KEYS[0]} ${BOS_KEYS[1]} ${BOS_KEYS[2]}
 cleos create account eosio ${ABP_KEYS[0]} ${ABP_KEYS[1]} ${ABP_KEYS[1]}
 
 cleos create account eosio ${MERCURY_KEYS[0]} ${MERCURY_KEYS[1]} ${MERCURY_KEYS[2]}
-cleos create account eosio ${VEUNS_KEYS[0]} ${VEUNS_KEYS[1]} ${VEUNS_KEYS[2]}
+cleos create account eosio ${VENUS_KEYS[0]} ${VENUS_KEYS[1]} ${VENUS_KEYS[2]}
 cleos create account eosio ${EARTH_KEYS[0]} ${EARTH_KEYS[1]} ${EARTH_KEYS[2]}
 cleos create account eosio ${MARS_KEYS[0]} ${MARS_KEYS[1]} ${MARS_KEYS[2]}
 cleos create account eosio ${JUPITER_KEYS[0]} ${JUPITER_KEYS[1]} ${JUPITER_KEYS[2]}
@@ -109,7 +109,7 @@ cleos push action eosio init '{"version": 0, "core": "4,BOS"}' -p eosio
 
 ## Step 11: Change BOS accounts to multisig
 ```
-MSIG_ACTIVE_RULE='{"threshold":5,"keys":[],"accounts":[{"permission":{"actor":"earth","permission":"active"},"weight":1},{"permission":{"actor":"jupiter","permission":"active"},"weight":1},{"permission":{"actor":"mars","permission":"active"},"weight":1},{"permission":{"actor":"mercury","permission":"active"},"weight":1},{"permission":{"actor":"neptune","permission":"active"},"weight":1},{"permission":{"actor":"uranus","permission":"active"},"weight":1},{"permission":{"actor":"veuns","permission":"active"},"weight":1}],"waits":[]}'
+MSIG_ACTIVE_RULE='{"threshold":5,"keys":[],"accounts":[{"permission":{"actor":"earth","permission":"active"},"weight":1},{"permission":{"actor":"jupiter","permission":"active"},"weight":1},{"permission":{"actor":"mars","permission":"active"},"weight":1},{"permission":{"actor":"mercury","permission":"active"},"weight":1},{"permission":{"actor":"neptune","permission":"active"},"weight":1},{"permission":{"actor":"uranus","permission":"active"},"weight":1},{"permission":{"actor":"venus","permission":"active"},"weight":1}],"waits":[]}'
 
 MSIG_OWNER_RULE='{"threshold":2,"keys":[],"accounts":[{"permission":{"actor":"mars","permission":"owner"},"weight":1},{"permission":{"actor":"mercury","permission":"owner"},"weight":1},{"permission":{"actor":"uranus","permission":"owner"},"weight":1}],"waits":[]}'
 
