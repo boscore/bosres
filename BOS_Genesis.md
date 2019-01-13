@@ -2,12 +2,12 @@
 
 ## Step 0: The keys to the world of BOS 
 ```
-EOSIO_PUB="EOS7hHHDtnPRbhMmfHJHUEKQyiutKrt9wZPdy1JbaATVLyxpCkrop"    # TODO: need to change 
-BOS_PUB="EOS7hHHDtnPRbhMmfHJHUEKQyiutKrt9wZPdy1JbaATVLyxpCkrop"      # TODO: need to change 
+EOSIO_PUB="EOS6YFfrYZ3z7bNnzoZF4V2zJStudMJ4NJBBE1JXGzebVzMG9aLc7"    # TODO: need to change 
+BOS_PUB="EOS5tpFnykJ8CMeodDaarMUMNmtr5vMCA2NUabeLDXVDLW41aQg59"      # TODO: need to change 
 
 # Schema: account ownerkey activekey
-BOS_KEYS=("bos" "EOS7hHHDtnPRbhMmfHJHUEKQyiutKrt9wZPdy1JbaATVLyxpCkrop" "EOS7hHHDtnPRbhMmfHJHUEKQyiutKrt9wZPdy1JbaATVLyxpCkrop")  # TODO: need to change 
-ABP_KEYS=("bos.abp" "EOS7hHHDtnPRbhMmfHJHUEKQyiutKrt9wZPdy1JbaATVLyxpCkrop")  # TODO: need to change 
+BOS_KEYS=("bos" "EOS6T27NLVPxSJxQHrjRVCa1w8LPjAFdWMjvAT8jwcZWXjJtAvLxZ" "EOS6T27NLVPxSJxQHrjRVCa1w8LPjAFdWMjvAT8jwcZWXjJtAvLxZ")  # TODO: need to change 
+ABP_KEYS=("bos.abp" "EOS7Dx8ZsijpAD7HTRmtCMpHKys5T5XEmYmWBLmoyr6gygtEhXBmM")  # TODO: need to change 
 
 # the Core Teams' accounts and keys
 MERCURY_KEYS=("mercury" "EOS8Ybz56pR5b4Rq2nvJ3ZT9CehG78pXEYdwQ9LHKPm4ZFuwM777W" "EOS8KGrtNbB13u3vt5FY84w6777EAJqCbP2ywxcgD1LFC9MGxUgh6")
@@ -36,7 +36,7 @@ cleos wallet import --private-key <private-key>
 
 ## Step 3: Set contract eosio.bios
 ```
-CONTRACTS_FOLDER='~/bos.contract-prebuild' 
+CONTRACTS_FOLDER='./bos.contract-prebuild' 
 cleos set contract eosio ${CONTRACTS_FOLDER}/eosio.bios -p eosio
 ```
 
@@ -55,7 +55,7 @@ do
 done
 
 FEATURE_ACTS=(
-    "redpacket" "bos.btc" "bos.eth" "bos.eos" "bos.adrop"
+    "redpacket" "bos.btc" "bos.eth" "bos.eos" "bos.adrop" "bos.usdt" 
     "bos.op" "bos.angel" "bos.eco" "bos.pioneer" "io" "bosibc.io"
 )
 for account in ${FEATURE_ACTS[*]}
@@ -111,7 +111,34 @@ cleos set contract eosio ${CONTRACTS_FOLDER}/eosio.system -x 1000 -p eosio
 cleos push action eosio init '{"version": 0, "core": "4,BOS"}' -p eosio
 ```
 
-## Step 11: Change BOS accounts to multisig
+## Step 11: Allocate token 
+```
+cleos transfer eosio bos          "200000000.0000 BOS" "Lock 4 years, unlock daily"
+cleos transfer eosio bos.op       "100000000.0000 BOS" "BOS operation"
+cleos transfer eosio bos.angel    "200000000.0000 BOS" "4 times of angel investment"
+cleos transfer eosio bos.eco      "400000000.0000 BOS" "BOS eco-cultivation"
+cleos transfer eosio bos.adrop    "50158000.0000 BOS"  "Airdrop for EOS directly"
+cleos transfer eosio bos.pioneer  "50000000.0000 BOS"  "For better BPs and DApps"
+```
+
+## Step 12: Delegate BOS
+```
+# buyram for accounts
+cleos system buyram bos.adrop bos "10.0000 BOS"
+cleos system buyram bos.adrop bos.op "10.0000 BOS"
+cleos system buyram bos.adrop bos.angel "10.0000 BOS"
+cleos system buyram bos.adrop bos.eco  "10.0000 BOS"
+cleos system buyram bos.adrop bos.pioneer "10.0000 BOS"
+
+# delegate 
+cleos system delegatebw bos bos              "100000000.0000 BOS" "100000000.0000 BOS"
+cleos system delegatebw bos.op bos.op        "50000000.0000 BOS" "50000000.0000 BOS" 
+cleos system delegatebw bos.angel bos.angel  "100000000.0000 BOS" "100000000.0000 BOS"
+cleos system delegatebw bos.eco bos.eco      "200000000.0000 BOS" "200000000.0000 BOS"
+cleos system delegatebw bos.pioneer bos.pioneer  "25000000.0000 BOS" "25000000.0000 BOS"
+```
+
+## Step 13: Change BOS accounts to multisig
 ```
 MSIG_ACTIVE_RULE='{"threshold":5,"keys":[],"accounts":[{"permission":{"actor":"earth","permission":"active"},"weight":1},{"permission":{"actor":"jupiter","permission":"active"},"weight":1},{"permission":{"actor":"mars","permission":"active"},"weight":1},{"permission":{"actor":"mercury","permission":"active"},"weight":1},{"permission":{"actor":"neptune","permission":"active"},"weight":1},{"permission":{"actor":"uranus","permission":"active"},"weight":1},{"permission":{"actor":"venus","permission":"active"},"weight":1}],"waits":[]}'
 
@@ -127,17 +154,7 @@ do
 done
 ```
 
-## Step 12: Allocate token 
-```
-cleos transfer eosio bos          "200000000.0000 BOS" "Lock 4 years, unlock daily"
-cleos transfer eosio bos.op       "100000000.0000 BOS" "BOS operation"
-cleos transfer eosio bos.angel    "200000000.0000 BOS" "4 times of angel investment"
-cleos transfer eosio bos.eco      "400000000.0000 BOS" "BOS eco-cultivation"
-cleos transfer eosio bos.adrop    "50000000.0000 BOS"  "Airdrop for EOS directly"
-cleos transfer eosio bos.pioneer  "50000000.0000 BOS"  "For better BPs and DApps"
-```
-
-## Step 13: Resign all system accounts
+## Step 14: Resign all system accounts
 ```
 for account in ${SYS_ACTS[*]}
 do
@@ -147,11 +164,11 @@ do
     sleep 1; 
 done
 
-#resign eosio
+# resign eosio
 cleos push action eosio updateauth '{"account": "eosio", "permission": "active", "parent": "owner", "auth":{"threshold": 1, "keys": [], "waits": [], "accounts": [{"weight": 1, "permission": {"actor": "eosio.prods", "permission": active}}]}}' -p eosio@active 
 cleos push action eosio updateauth '{"account": "eosio", "permission": "owner", "parent": "", "auth":{"threshold": 1, "keys": [], "waits": [], "accounts": [{"weight": 1, "permission": {"actor": "eosio.prods", "permission": active}}]}}' -p eosio@owner
 
-#check again
+# check again
 for account in ${SYS_ACTS[*]}
 do 
     echo --- ${account} --- && cleos get account ${account} && sleep 1; 
@@ -160,7 +177,14 @@ done
 cleos get account eosio
 ```
 
-## Step 14: Import the accounts from snapshot and airdrop 
+## Step 15: Import the accounts from snapshot and airdrop 
+
+- Use the snapshot import tool to airdrop by the `bos.adrop`.
+- Transfer the extra BOS into the black hole account `bos.bhole` and the `bos.adrop` should be zero
+```
+    cleos transfer bos.adrop bos.bhole "xxxxx BOS"
+```
+
 The top 50 EOSMainnet BPs' accounts will be kept by replacing **eos** into **bos**.  
 This account list be taken at 2019-01-10 14:30 UTC+13
 ```
@@ -172,6 +196,6 @@ The snapshot files can be found at:
 - [accounts_info_bos_snapshot.airdrop.msig.json](https://github.com/boscore/bos-airdrop-snapshots/blob/master/accounts_info_bos_snapshot.airdrop.msig.json)
 - [accounts_info_bos_snapshot.airdrop.normal.csv](https://github.com/boscore/bos-airdrop-snapshots/blob/master/accounts_info_bos_snapshot.airdrop.normal.csv)
 
-## Step 15: Validate the airdrop by community
+## Step 16: Validate the airdrop by community
 
-## Step 16: Hello BOS
+## Step 17: Hello BOS
