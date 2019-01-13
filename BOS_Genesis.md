@@ -17,6 +17,8 @@ MARS_KEYS=("mars" "EOS8DmeNbNDJc8wMNd7C2Upz3zDRhc6P87QHiW8EbssjKSLSGTrbs" "EOS71
 JUPITER_KEYS=("jupiter" "EOS7do6GqRAJEpcJY536zG6j3VqXMMdpMKtDCkFXzYYNCKLB73xVU" "EOS5yajrR2u7XxDcnjXE2H6WYjDabi2Z44zRrYz6pK3fZtFAyrnt5")
 URANUS_KEYS=("uranus" "EOS84TUrXoKKWYdUMoTtGKqKge9oqBDKSqxKfX7oHmkxD5LbGLT2z" "EOS6bNYimeRE6QQcw5yMdMVSotZ87gX3QN5XEQTbwvsKAVVs7JTiH")
 NEPTUNE_KEYS=("neptune" "EOS7YyA18xX8zdDaWGSB7d7aV5qjUoG6YE7murr2Nv7TbyS6WNSCy" "EOS68aR5GxMugpxoFnQyA3k6EXiBYFvjqXRMiTDy9HFynLxqr4LEh")
+SATURN_KEYS=("saturn" "EOS6VbgttSHcQBsQnpnNZGR67JYBcbV7gsNRyjx3JTEoPXRCCvg8n" "EOS6DYnE3PNg4su8fZyDffUvXDKvFDVxbBdJ8fMBjdp7CkroUgN7F")
+SUN_KEYS=("sun" "EOS6VbgttSHcQBsQnpnNZGR67JYBcbV7gsNRyjx3JTEoPXRCCvg8n" "EOS6DYnE3PNg4su8fZyDffUvXDKvFDVxbBdJ8fMBjdp7CkroUgN7F")
 ```
 
 ## Step 1: Prepare config.ini and genesis.json by start a node with eosio
@@ -54,7 +56,7 @@ done
 
 FEATURE_ACTS=(
     "redpacket" "bos.btc" "bos.eth" "bos.eos" "bos.adrop"
-    "bos.op" "bos.angel" "bos.eco" "bos.pioneer" 
+    "bos.op" "bos.angel" "bos.eco" "bos.pioneer" "io" "bosibc.io"
 )
 for account in ${FEATURE_ACTS[*]}
 do
@@ -76,6 +78,8 @@ cleos create account eosio ${MARS_KEYS[0]} ${MARS_KEYS[1]} ${MARS_KEYS[2]}
 cleos create account eosio ${JUPITER_KEYS[0]} ${JUPITER_KEYS[1]} ${JUPITER_KEYS[2]}
 cleos create account eosio ${URANUS_KEYS[0]} ${URANUS_KEYS[1]} ${URANUS_KEYS[2]}
 cleos create account eosio ${NEPTUNE_KEYS[0]} ${NEPTUNE_KEYS[1]} ${NEPTUNE_KEYS[2]}
+cleos create account eosio ${SATURN_KEYS[0]} ${SATURN_KEYS[1]} ${SATURN_KEYS[2]}
+cleos create account eosio ${SUN_KEYS[0]} ${SUN_KEYS[1]} ${SUN_KEYS[2]}
 ```
 
 ## Step 6: Assign the ABP 
