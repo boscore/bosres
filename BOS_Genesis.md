@@ -55,7 +55,7 @@ do
 done
 
 FEATURE_ACTS=(
-    "redpacket" "bos.btc" "bos.eth" "bos.eos" "bos.adrop" "bos.usdt" 
+    "redpacket" "btc.bos" "eth.bos" "eos.bos" "usdt.bos" "bos.adrop" 
     "bos.op" "bos.angel" "bos.eco" "bos.pioneer" "io" "bosibc.io"
 )
 for account in ${FEATURE_ACTS[*]}
@@ -197,5 +197,12 @@ The snapshot files can be found at:
 - [accounts_info_bos_snapshot.airdrop.normal.csv](https://github.com/boscore/bos-airdrop-snapshots/blob/master/accounts_info_bos_snapshot.airdrop.normal.csv)
 
 ## Step 16: Validate the airdrop by community
+```
+    # pause the ABP to produce block to wait the community validation
+    curl http://127.0.0.1:8888/v1/producer/pause
+
+    # after the validation, continue to produce block
+    curl http://127.0.0.1:8888/v1/producer/resume
+```
 
 ## Step 17: Hello BOS
