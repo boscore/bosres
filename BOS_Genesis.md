@@ -56,7 +56,7 @@ done
 
 FEATURE_ACTS=(
     "redpacket" "btc.bos" "eth.bos" "eos.bos" "usdt.bos" "bos.adrop" 
-    "bos.op" "bos.angel" "bos.eco" "bos.pioneer" "io" "bosibc.io"
+    "bos.op" "bos.angel" "bos.eco" "bos.pioneer" "io" "bosibc.io" "uid"
 )
 for account in ${FEATURE_ACTS[*]}
 do
@@ -94,9 +94,10 @@ cleos set contract eosio.msig ${CONTRACTS_FOLDER}/eosio.msig -p eosio.msig
 cleos set contract eosio.wrap ${CONTRACTS_FOLDER}/eosio.wrap -x 1000 -p eosio.wrap
 ```
 
-# Setp 8: Setting privileged account for eosio.msig
+# Setp 8: Setting privileged account
 ```
 cleos push action eosio setpriv '{"account": "eosio.msig", "is_priv": 1}' -p eosio
+cleos push action eosio setpriv '{"account": "bos.adrop", "is_priv": 1}' -p eosio 
 ```
 
 ## Step 9: Create and issue token
@@ -178,13 +179,20 @@ cleos get account eosio
 ```
 
 ## Step 15: Import the accounts from snapshot and airdrop 
-
 - Use the snapshot import tool to airdrop by the `bos.adrop`.
 - Transfer the extra BOS into the black hole account `bos.bhole` and the `bos.adrop` should be zero
 ```
     cleos transfer bos.adrop bos.bhole "xxxxx BOS"
 ```
+- Resign `bos.adrop` permission
+```
+    account="bos.adrop"
+    cleos push action eosio updateauth '{"account": "'$account'", "permission": "active", "parent": "owner", "auth":{"threshold": 1, "keys": [], "waits": [], "accounts": [{"weight": 1, "permission": {"actor": "eosio", "permission": active}}]}}' -p ${account}@active
 
+    cleos push action eosio updateauth '{"account": "'$account'", "permission": "owner", "parent": "", "auth":{"threshold": 1, "keys": [], "waits": [], "accounts": [{"weight": 1, "permission": {"actor": "eosio", "permission": active}}]}}' -p ${account}@owner
+```
+
+### Note:
 The top 50 EOSMainnet BPs' accounts will be kept by replacing **eos** into **bos**.  
 This account list be taken at 2019-01-10 14:30 UTC+13
 ```
