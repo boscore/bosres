@@ -12,7 +12,7 @@ ABP_KEYS=("bos.abp" "EOS7Dx8ZsijpAD7HTRmtCMpHKys5T5XEmYmWBLmoyr6gygtEhXBmM")  # 
 # the Core Teams' accounts and keys
 MERCURY_KEYS=("mercury" "EOS8Ybz56pR5b4Rq2nvJ3ZT9CehG78pXEYdwQ9LHKPm4ZFuwM777W" "EOS8KGrtNbB13u3vt5FY84w6777EAJqCbP2ywxcgD1LFC9MGxUgh6")
 VENUS_KEYS=("venus" "EOS8iN2NZR29sKjfgraREWMZCTSUTuULMRiL3QmU1McCHxDBLeRcL" "EOS5xcrat34D5vkPj8vx1WRCS3Rd5PxjQbHrz7pmyLKLTsDDW91nn")
-EARTH_KEYS=("earth" "EOS58Mzpd2hEp5Q4MqDFBgX9EbWU6gZcCQZ7Soa9HsuBYw1zvNGxT" "EOS58Mzpd2hEp5Q4MqDFBgX9EbWU6gZcCQZ7Soa9HsuBYw1zvNGxT")
+EARTH_KEYS=("earth" "EOS5N4vi94etZFYtPvrPLoFaZfTSeLvgp793ckZUPAoLcfks5Ateu" "EOS5MCztcTcuw6D7e2jK6xZursoEaX2tHacB7sxCQnAaxgFmt7kqV")
 MARS_KEYS=("mars" "EOS8DmeNbNDJc8wMNd7C2Upz3zDRhc6P87QHiW8EbssjKSLSGTrbs" "EOS71u9BFuat4CtxzbqzFGzacgdgDdtujpiRm95Kyw24MUuMvWUNX")
 JUPITER_KEYS=("jupiter" "EOS7do6GqRAJEpcJY536zG6j3VqXMMdpMKtDCkFXzYYNCKLB73xVU" "EOS5yajrR2u7XxDcnjXE2H6WYjDabi2Z44zRrYz6pK3fZtFAyrnt5")
 URANUS_KEYS=("uranus" "EOS84TUrXoKKWYdUMoTtGKqKge9oqBDKSqxKfX7oHmkxD5LbGLT2z" "EOS6bNYimeRE6QQcw5yMdMVSotZ87gX3QN5XEQTbwvsKAVVs7JTiH")
@@ -45,7 +45,7 @@ cleos set contract eosio ${CONTRACTS_FOLDER}/eosio.bios -p eosio
 SYS_ACTS=(
     "eosio.bpay" "eosio.msig" "eosio.names" "eosio.ram" "eosio.ramfee" 
     "eosio.saving" "eosio.stake" "eosio.token" "eosio.vpay" "eosio.wrap" 
-    "bos.dev" "bos.gov" "bos.bhole"
+    "bos.dev" "bos.gov" "hole.bos"
 )
 for account in ${SYS_ACTS[*]}
 do
@@ -54,9 +54,11 @@ do
     sleep 1; 
 done
 
+# After the mainnet boot and the feature contracts deployed, the permissions will be resigned
 FEATURE_ACTS=(
-    "redpacket" "btc.bos" "eth.bos" "eos.bos" "usdt.bos" "bos.adrop" 
-    "bos.op" "bos.angel" "bos.eco" "bos.pioneer" "io" "bosibc.io" "uid"
+    "redpacket" "btc.bos" "eth.bos" "eos.bos" "usdt.bos" "airdrop.bos" 
+    "op.bos" "angel.bos" "eco.bos" "pioneer.bos" "io" "uid"
+    "ibcchain" "bosibc.io"
 )
 for account in ${FEATURE_ACTS[*]}
 do
@@ -97,13 +99,13 @@ cleos set contract eosio.wrap ${CONTRACTS_FOLDER}/eosio.wrap -x 1000 -p eosio.wr
 # Setp 8: Setting privileged account
 ```
 cleos push action eosio setpriv '{"account": "eosio.msig", "is_priv": 1}' -p eosio
-cleos push action eosio setpriv '{"account": "bos.adrop", "is_priv": 1}' -p eosio 
+cleos push action eosio setpriv '{"account": "airdrop.bos", "is_priv": 1}' -p eosio 
 ```
 
 ## Step 9: Create and issue token
 ```
 cleos push action eosio.token create '["eosio", "10000000000.0000 BOS"]' -p eosio.token 
-cleos push action eosio.token issue '["eosio", "1000158000.0000 BOS", "BOSCore"]' -p eosio  # 158000 to create account
+cleos push action eosio.token issue '["eosio", "1000500000.0000 BOS", "BOSCore"]' -p eosio  # 500000 to create account
 ```
 
 ## Step 10: Set contract eosio.system
@@ -115,28 +117,28 @@ cleos push action eosio init '{"version": 0, "core": "4,BOS"}' -p eosio
 ## Step 11: Allocate token 
 ```
 cleos transfer eosio bos          "200000000.0000 BOS" "Lock 4 years, unlock daily"
-cleos transfer eosio bos.op       "100000000.0000 BOS" "BOS operation"
-cleos transfer eosio bos.angel    "200000000.0000 BOS" "4 times of angel investment"
-cleos transfer eosio bos.eco      "400000000.0000 BOS" "BOS eco-cultivation"
-cleos transfer eosio bos.adrop    "50158000.0000 BOS"  "Airdrop for EOS directly"
-cleos transfer eosio bos.pioneer  "50000000.0000 BOS"  "For better BPs and DApps"
+cleos transfer eosio op.bos       "100000000.0000 BOS" "BOS operation"
+cleos transfer eosio angel.bos    "200000000.0000 BOS" "4 times of angel investment"
+cleos transfer eosio eco.bos      "400000000.0000 BOS" "BOS eco-cultivation"
+cleos transfer eosio airdrop.bos  "50500000.0000 BOS"  "Airdrop for EOS directly"
+cleos transfer eosio pioneer.bos  "50000000.0000 BOS"  "For better BPs and DApps"
 ```
 
 ## Step 12: Delegate BOS
 ```
 # buyram for accounts
-cleos system buyram bos.adrop bos "10.0000 BOS"
-cleos system buyram bos.adrop bos.op "10.0000 BOS"
-cleos system buyram bos.adrop bos.angel "10.0000 BOS"
-cleos system buyram bos.adrop bos.eco  "10.0000 BOS"
-cleos system buyram bos.adrop bos.pioneer "10.0000 BOS"
+cleos system buyram airdrop.bos bos "10.0000 BOS"
+cleos system buyram airdrop.bos op.bos "10.0000 BOS"
+cleos system buyram airdrop.bos angel.bos "10.0000 BOS"
+cleos system buyram airdrop.bos eco.bos  "10.0000 BOS"
+cleos system buyram airdrop.bos pioneer.bos "10.0000 BOS"
 
 # delegate 
 cleos system delegatebw bos bos              "100000000.0000 BOS" "100000000.0000 BOS"
-cleos system delegatebw bos.op bos.op        "50000000.0000 BOS" "50000000.0000 BOS" 
-cleos system delegatebw bos.angel bos.angel  "100000000.0000 BOS" "100000000.0000 BOS"
-cleos system delegatebw bos.eco bos.eco      "200000000.0000 BOS" "200000000.0000 BOS"
-cleos system delegatebw bos.pioneer bos.pioneer  "25000000.0000 BOS" "25000000.0000 BOS"
+cleos system delegatebw op.bos op.bos        "50000000.0000 BOS" "50000000.0000 BOS" 
+cleos system delegatebw angel.bos angel.bos  "100000000.0000 BOS" "100000000.0000 BOS"
+cleos system delegatebw eco.bos eco.bos      "200000000.0000 BOS" "200000000.0000 BOS"
+cleos system delegatebw pioneer.bos pioneer.bos  "25000000.0000 BOS" "25000000.0000 BOS"
 ```
 
 ## Step 13: Change BOS accounts to multisig
@@ -145,7 +147,7 @@ MSIG_ACTIVE_RULE='{"threshold":5,"keys":[],"accounts":[{"permission":{"actor":"e
 
 MSIG_OWNER_RULE='{"threshold":2,"keys":[],"accounts":[{"permission":{"actor":"mars","permission":"owner"},"weight":1},{"permission":{"actor":"mercury","permission":"owner"},"weight":1},{"permission":{"actor":"uranus","permission":"owner"},"weight":1}],"waits":[]}'
 
-MSIG_ACTS=("bos" "bos.op" "bos.angel" "bos.eco" "bos.pioneer")
+MSIG_ACTS=("bos" "op.bos" "angel.bos" "eco.bos" "pioneer.bos")
 for account in ${MSIG_ACTS[*]}
 do
     echo -e "\n multisig setup $account \n"; 
@@ -179,14 +181,14 @@ cleos get account eosio
 ```
 
 ## Step 15: Import the accounts from snapshot and airdrop 
-- Use the snapshot import tool to airdrop by the `bos.adrop`.
-- Transfer the extra BOS into the black hole account `bos.bhole` and the `bos.adrop` should be zero
+- Use the snapshot import tool to airdrop by the `airdrop.bos`.
+- Transfer the extra BOS into the black hole account `hole.bos` and the `airdrop.bos` should be zero
 ```
-    cleos transfer bos.adrop bos.bhole "xxxxx BOS"
+    cleos transfer airdrop.bos hole.bos "xxxxx BOS"
 ```
-- Resign `bos.adrop` permission
+- Resign `airdrop.bos` permission
 ```
-    account="bos.adrop"
+    account="airdrop.bos"
     cleos push action eosio updateauth '{"account": "'$account'", "permission": "active", "parent": "owner", "auth":{"threshold": 1, "keys": [], "waits": [], "accounts": [{"weight": 1, "permission": {"actor": "eosio", "permission": active}}]}}' -p ${account}@active
 
     cleos push action eosio updateauth '{"account": "'$account'", "permission": "owner", "parent": "", "auth":{"threshold": 1, "keys": [], "waits": [], "accounts": [{"weight": 1, "permission": {"actor": "eosio", "permission": active}}]}}' -p ${account}@owner
