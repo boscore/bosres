@@ -7,7 +7,8 @@ BOS_PUB="EOS5tpFnykJ8CMeodDaarMUMNmtr5vMCA2NUabeLDXVDLW41aQg59"      # TODO: nee
 
 # Schema: account ownerkey activekey
 BOS_KEYS=("bos" "EOS6T27NLVPxSJxQHrjRVCa1w8LPjAFdWMjvAT8jwcZWXjJtAvLxZ" "EOS6T27NLVPxSJxQHrjRVCa1w8LPjAFdWMjvAT8jwcZWXjJtAvLxZ")  # TODO: need to change 
-ABP_KEYS=("bos.abp" "EOS7Dx8ZsijpAD7HTRmtCMpHKys5T5XEmYmWBLmoyr6gygtEhXBmM")  # TODO: need to change 
+ABP_KEYS=("abp.bos" "EOS7Dx8ZsijpAD7HTRmtCMpHKys5T5XEmYmWBLmoyr6gygtEhXBmM")  # TODO: need to change 
+AIRDROP_KEYS=("airdrop.bos" "EOS7Dx8ZsijpAD7HTRmtCMpHKys5T5XEmYmWBLmoyr6gygtEhXBmM") # TODO: need to change 
 
 # the Core Teams' accounts and keys
 MERCURY_KEYS=("mercury" "EOS8Ybz56pR5b4Rq2nvJ3ZT9CehG78pXEYdwQ9LHKPm4ZFuwM777W" "EOS8KGrtNbB13u3vt5FY84w6777EAJqCbP2ywxcgD1LFC9MGxUgh6")
@@ -54,9 +55,8 @@ do
     sleep 1; 
 done
 
-# After the mainnet boot and the feature contracts deployed, the permissions will be resigned
 FEATURE_ACTS=(
-    "redpacket" "btc.bos" "eth.bos" "eos.bos" "usdt.bos" "airdrop.bos" 
+    "redpacket" "btc.bos" "eth.bos" "eos.bos" "usdt.bos" 
     "op.bos" "angel.bos" "eco.bos" "pioneer.bos" "io" "uid"
     "ibcchain" "bosibc.io"
 )
@@ -72,6 +72,7 @@ done
 ```
 cleos create account eosio ${BOS_KEYS[0]} ${BOS_KEYS[1]} ${BOS_KEYS[2]}
 cleos create account eosio ${ABP_KEYS[0]} ${ABP_KEYS[1]} ${ABP_KEYS[1]}
+cleos create account eosio ${AIRDROP_KEYS[0]} ${AIRDROP_KEYS[1]} ${AIRDROP_KEYS[1]}
 
 cleos create account eosio ${MERCURY_KEYS[0]} ${MERCURY_KEYS[1]} ${MERCURY_KEYS[2]}
 cleos create account eosio ${VENUS_KEYS[0]} ${VENUS_KEYS[1]} ${VENUS_KEYS[2]}
@@ -105,7 +106,7 @@ cleos push action eosio setpriv '{"account": "airdrop.bos", "is_priv": 1}' -p eo
 ## Step 9: Create and issue token
 ```
 cleos push action eosio.token create '["eosio", "10000000000.0000 BOS"]' -p eosio.token 
-cleos push action eosio.token issue '["eosio", "1000500000.0000 BOS", "BOSCore"]' -p eosio  # 500000 to create account
+cleos push action eosio.token issue '["eosio", "1000404033.9033 BOS", "BOSCore"]' -p eosio  # 404033.9033 to airdrop
 ```
 
 ## Step 10: Set contract eosio.system
@@ -120,7 +121,7 @@ cleos transfer eosio bos          "200000000.0000 BOS" "Lock 4 years, unlock dai
 cleos transfer eosio op.bos       "100000000.0000 BOS" "BOS operation"
 cleos transfer eosio angel.bos    "200000000.0000 BOS" "4 times of angel investment"
 cleos transfer eosio eco.bos      "400000000.0000 BOS" "BOS eco-cultivation"
-cleos transfer eosio airdrop.bos  "50500000.0000 BOS"  "Airdrop for EOS directly"
+cleos transfer eosio airdrop.bos  "50404033.9033 BOS"  "Airdrop for EOS directly"
 cleos transfer eosio pioneer.bos  "50000000.0000 BOS"  "For better BPs and DApps"
 ```
 
@@ -147,8 +148,7 @@ MSIG_ACTIVE_RULE='{"threshold":5,"keys":[],"accounts":[{"permission":{"actor":"e
 
 MSIG_OWNER_RULE='{"threshold":2,"keys":[],"accounts":[{"permission":{"actor":"mars","permission":"owner"},"weight":1},{"permission":{"actor":"mercury","permission":"owner"},"weight":1},{"permission":{"actor":"uranus","permission":"owner"},"weight":1}],"waits":[]}'
 
-MSIG_ACTS=("bos" "op.bos" "angel.bos" "eco.bos" "pioneer.bos")
-for account in ${MSIG_ACTS[*]}
+for account in ${FEATURE_ACTS[*]}
 do
     echo -e "\n multisig setup $account \n"; 
     cleos set account permission ${account} active ${MSIG_ACTIVE_RULE} owner -p ${account}@owner
@@ -181,11 +181,7 @@ cleos get account eosio
 ```
 
 ## Step 15: Import the accounts from snapshot and airdrop 
-- Use the snapshot import tool to airdrop by the `airdrop.bos`.
-- Transfer the extra BOS into the black hole account `hole.bos` and the `airdrop.bos` should be zero
-```
-    cleos transfer airdrop.bos hole.bos "xxxxx BOS"
-```
+- Use the snapshot import [tool](https://github.com/boscore/bos-airdrop-snapshots) to airdrop by the `airdrop.bos`.
 - Resign `airdrop.bos` permission
 ```
     account="airdrop.bos"
