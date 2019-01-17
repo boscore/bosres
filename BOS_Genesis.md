@@ -106,7 +106,7 @@ cleos push action eosio setpriv '{"account": "airdrop.bos", "is_priv": 1}' -p eo
 ## Step 9: Create and issue token
 ```
 cleos push action eosio.token create '["eosio", "10000000000.0000 BOS"]' -p eosio.token 
-cleos push action eosio.token issue '["eosio", "1000404033.9033 BOS", "BOSCore"]' -p eosio  # 404033.9033 to airdrop
+cleos push action eosio.token issue '["eosio", "1000404033.4033 BOS", "BOSCore"]' -p eosio  # 404033.4033 to airdrop
 ```
 
 ## Step 10: Set contract eosio.system
@@ -121,7 +121,7 @@ cleos transfer eosio bos          "200000000.0000 BOS" "Lock 4 years, unlock dai
 cleos transfer eosio op.bos       "100000000.0000 BOS" "BOS operation"
 cleos transfer eosio angel.bos    "200000000.0000 BOS" "4 times of angel investment"
 cleos transfer eosio eco.bos      "400000000.0000 BOS" "BOS eco-cultivation"
-cleos transfer eosio airdrop.bos  "50404033.9033 BOS"  "Airdrop for EOS directly"
+cleos transfer eosio airdrop.bos  "50404033.4033 BOS"  "Airdrop for EOS directly"
 cleos transfer eosio pioneer.bos  "50000000.0000 BOS"  "For better BPs and DApps"
 ```
 
