@@ -1,6 +1,5 @@
 api-address:
 ```
-
 api: https://bos.eosargentina.io
 ```
 
@@ -36,4 +35,4 @@ p2p-peer-address = bos.eosargentina.io:9876
 p2p-peer-address =bosapi-two.eosstore.co:9871
 p2p-peer-address = bos-peer.eosio.sg:9879
 ```
-最新接入请参考工具：[eosnation节点统计工具](https://validate.eosnation.io/bos/reports/endpoints.html)
+最新接入请参考工具：[ eosnation节点统计工具 ](https://validate.eosnation.io/bos/reports/endpoints.html)
