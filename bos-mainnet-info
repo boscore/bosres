@@ -1,3 +1,10 @@
+api-address:
+```
+
+api: https://bos.eosargentina.io
+```
+
+
 ```
 p2p-peer-address = p2p.bossweden.org:9876
 p2p-peer-address = bos.eosn.io:9876
@@ -23,5 +30,9 @@ p2p-peer-address = p2p.bos.nodepacific.com:9876
 p2p-peer-address = 47.91.211.240:443
 p2p-peer-address = 47.91.225.161:443
 p2p-peer-address = peer-bos.eospacex.com:88
+p2p-peer-address = bos-peer.eosio.sg:9879
+
+p2p-peer-address = bos.eosargentina.io:9876
+p2p-peer-address =bosapi-two.eosstore.co:9871
 p2p-peer-address = bos-peer.eosio.sg:9879
 ```
