@@ -122,7 +122,7 @@ cleos transfer eosio op.bos       "100000000.0000 BOS" "BOS operation"
 cleos transfer eosio angel.bos    "200000000.0000 BOS" "4 times of angel investment"
 cleos transfer eosio eco.bos      "400000000.0000 BOS" "BOS eco-cultivation"
 cleos transfer eosio airdrop.bos  "50404033.4033 BOS"  "Airdrop for EOS directly"
-cleos transfer eosio pioneer.bos  "50000000.0000 BOS"  "For better BPs and DApps"
+cleos transfer eosio pioneer.bos  "50000000.0000 BOS"  "For better BPs, DApps and Developers"
 ```
 
 ## Step 12: Delegate BOS
